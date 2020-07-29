@@ -3,6 +3,7 @@ import PhotoWall from "./PhotoWall";
 import AddPhoto from "./AddPhoto";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import {
   removePhoto,
   addPhoto,
@@ -13,6 +14,7 @@ import {
   startAddingComment,
   startLoadingComments,
 } from "../actions/actions";
+import * as actions from "../actions/actions.js";
 import Single from "./Single";
 
 class Main extends Component {
@@ -94,6 +96,10 @@ const mapStateToProps = (state) => ({
 //     dispatch(addComment(comment));
 //   },
 // });
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators(actions, dispatch);
+// }
 
 export default connect(mapStateToProps, {
   removePhoto,
