@@ -3,12 +3,33 @@ import PhotoWall from "./PhotoWall";
 import AddPhoto from "./AddPhoto";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { removePhoto, addPhoto, addComment } from "../actions/actions";
+import {
+  removePhoto,
+  addPhoto,
+  addComment,
+  startAddingPost,
+  startLoadingPosts,
+  startRemovingPost,
+  startAddingComment,
+  startLoadingComments,
+} from "../actions/actions";
 import Single from "./Single";
 
 class Main extends Component {
+  state = {
+    loading: true,
+  };
+  componentDidMount() {
+    this.props.startLoadingPosts().then(() => {
+      this.setState((state, props) => {
+        return { loading: false };
+      });
+    });
+    this.props.startLoadingComments();
+  }
+
   render() {
-    const { addPhoto } = this.props;
+    const { addPhoto, startAddingPost } = this.props;
     return (
       <Router>
         <>
@@ -21,6 +42,7 @@ class Main extends Component {
               path="/"
               render={() => (
                 <PhotoWall
+                  loading={this.state.loading}
                   {...this.props} // can send all props at once using spread operator or individually like below
                   // posts={posts}
                   // removePhoto={removePhoto}
@@ -33,6 +55,7 @@ class Main extends Component {
               render={({ history }) => (
                 <AddPhoto
                   addPhoto={addPhoto} // can handle this either in main file or in the add photo file
+                  startAddingPost={startAddingPost}
                   //  history={history}
                   // onAddPhoto={(newPost) => {
                   //   addPhoto(newPost);
@@ -46,7 +69,13 @@ class Main extends Component {
             <Route
               exact
               path="/single/:id"
-              render={(params) => <Single {...this.props} {...params} />} // make sure to pass params after the this.props
+              render={(params) => (
+                <Single
+                  {...this.props}
+                  {...params}
+                  loading={this.state.loading}
+                />
+              )} // make sure to pass params after the this.props
             />
           </Switch>
         </>
@@ -66,6 +95,13 @@ const mapStateToProps = (state) => ({
 //   },
 // });
 
-export default connect(mapStateToProps, { removePhoto, addPhoto, addComment })(
-  Main
-);
+export default connect(mapStateToProps, {
+  removePhoto,
+  addPhoto,
+  addComment,
+  startAddingPost,
+  startLoadingPosts,
+  startRemovingPost,
+  startAddingComment,
+  startLoadingComments,
+})(Main);

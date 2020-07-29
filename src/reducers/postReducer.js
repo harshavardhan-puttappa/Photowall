@@ -1,5 +1,5 @@
 import posts from "../data/posts";
-import { REMOVE_PHOTO, ADD_PHOTO } from "./../actions/types";
+import { REMOVE_PHOTO, ADD_PHOTO, LOAD_POSTS } from "./../actions/types";
 
 const initialState = {
   posts: posts,
@@ -19,6 +19,8 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: [...state.posts, payload],
       };
+    case LOAD_POSTS:
+      return { posts: payload };
     default:
       return state;
   }

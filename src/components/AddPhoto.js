@@ -13,7 +13,8 @@ const AddPhoto = (props) => {
     };
 
     if (imageLink && description) {
-      props.addPhoto(newPhoto);
+      props.startAddingPost(newPhoto);
+      //props.addPhoto(newPhoto);
       props.history.push("/");
     }
   };

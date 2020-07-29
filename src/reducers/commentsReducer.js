@@ -1,4 +1,4 @@
-import { ADD_COMMENT } from "./../actions/types";
+import { ADD_COMMENT, LOAD_COMMENTS } from "./../actions/types";
 
 const commentsReducer = (state = {}, action) => {
   const { type, payload } = action;
@@ -15,6 +15,9 @@ const commentsReducer = (state = {}, action) => {
         ...state,
         [payload.postId]: [...state[payload.postId], payload.comment],
       };
+
+    case LOAD_COMMENTS:
+      return payload;
     default:
       return state;
   }
