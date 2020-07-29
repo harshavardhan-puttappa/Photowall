@@ -1,14 +1,15 @@
 import React from "react";
 
 const Comments = (props) => {
-  const { comments, addComment } = props;
+  const { comments, addComment, id } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const comment = e.target.elements.comment.value;
-    comment && addComment(comment);
-    var frm = document.getElementsByName("comments-form")[0]; // to reset the form after submission
-    frm.reset();
+    comment && addComment(comment, id);
+    // var frm = document.getElementsByName("comments-form")[0]; // to reset the form after submission
+    // frm.reset();
+    e.target.elements.comment.value = "";
   };
   return (
     <div className="comment">

@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const Photo = (props) => {
-  const post = props.post;
+  const { post, comments } = props;
+  console.log(comments);
   return (
     <figure className="figure">
       <Link to={`/single/${post.id}`}>
@@ -15,10 +16,19 @@ const Photo = (props) => {
       <div className="button-container">
         <button
           className="remove-button"
-          onClick={() => props.removePhoto(props.index)} // can also pass posts.id to remove a post based on its id
+          onClick={() => {
+            props.removePhoto(props.index); // can also pass posts.id to remove a post based on its id
+            props.history.push("/");
+          }}
         >
           Remove
         </button>
+        <Link to={`/single/${post.id}`} className="button">
+          <div className="comment-count">
+            <div className="speech-bubble"></div>
+            {comments[post.id] ? comments[post.id].length : 0}
+          </div>
+        </Link>
       </div>
     </figure>
   );
@@ -29,4 +39,4 @@ Photo.propTypes = {
   removePhoto: PropTypes.func.isRequired,
 };
 
-export default Photo;
+export default withRouter(Photo);

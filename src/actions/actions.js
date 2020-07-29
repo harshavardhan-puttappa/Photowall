@@ -14,9 +14,9 @@ export const addPhoto = (newPhoto) => (dispatch) => {
   });
 };
 
-export function addComment(comment) {
+export function addComment(comment, postId) {
   return {
     type: ADD_COMMENT,
-    payload: comment,
+    payload: { comment, postId },
   };
 }

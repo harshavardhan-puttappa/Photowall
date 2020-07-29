@@ -11,11 +11,12 @@ const Single = (props) => {
   } = props;
 
   const post = posts.find((post) => post.id === Number(id));
-  const comments = props.comments;
+  const comments = props.comments[id] || [];
+  const index = posts.findIndex((post) => post.id === Number(id));
   return (
     <div className="single-photo">
-      <Photo post={post} />
-      <Comments addComment={props.addComment} comments={comments} />
+      <Photo post={post} index={index} comments={props.comments} />
+      <Comments addComment={props.addComment} comments={comments} id={id} />
     </div>
   );
 };
