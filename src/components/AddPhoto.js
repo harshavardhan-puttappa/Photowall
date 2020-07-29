@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 const AddPhoto = (props) => {
   const handleSubmit = (e) => {
@@ -10,11 +11,14 @@ const AddPhoto = (props) => {
       imageLink: imageLink,
       description: description,
     };
-    props.addPhoto(newPhoto);
+
+    if (imageLink && description) {
+      props.addPhoto(newPhoto);
+      props.history.push("/");
+    }
   };
   return (
     <div>
-      <h1>Add the photo</h1>
       <div className="form">
         <form onSubmit={handleSubmit}>
           <input type="text" name="link" placeholder="Link" />
@@ -26,4 +30,4 @@ const AddPhoto = (props) => {
   );
 };
 
-export default AddPhoto;
+export default withRouter(AddPhoto);
